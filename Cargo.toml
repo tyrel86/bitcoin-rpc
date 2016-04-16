@@ -2,6 +2,12 @@
 name = "bitcoin-rpc"
 version = "0.1.0"
 authors = ["Jean Pierre De Jesus Dudey Diaz <jeandudey@hotmail.com>"]
+repository = "https://github.com/jeandudey/bitcoin-rpc.git"
+homepage = "https://github.com/jeandudey/bitcoin-rpc.git"
+license = "GPL-3.0"
+readme = "README.md"
+documentation = "http://jeandudey.github.io/bitcoin-rpc/"
+description = "Bitcoin Rpc API client for rust."
 
 [lib]
 name = "bitcoinrpc"
