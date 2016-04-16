@@ -7,6 +7,34 @@ use jsonrpc_v1::client::Client as RpcClient;
 use jsonrpc_v1::Error as RpcError;
 use strason::Json;
 
+macro_rules! rpc_method {
+    ($method_name:ident<$return_type:ty>, $rpc_name:expr) => {
+        pub fn $method_name(&self) -> Result<$return_type, RpcError> {
+            let request = self.client.build_request(String::from($rpc_name), vec![]);
+
+            match self.client.send_request(&request).and_then(|res| res.into_result::<$return_type>()) {
+                Ok(res) => return Ok(res),
+                Err(e) => return Err(e),
+            }
+        }
+    };
+    ($method_name:ident<$return_type:ty>, $rpc_name:expr, { $($param:ident : $param_ty:ty),* }) => {
+        pub fn $method_name(&self, $($param : $param_ty),*) -> Result<$return_type, RpcError> {
+            let mut params: Vec<Json> = Vec::new();
+
+            $(
+                params.push(Json::from($param));
+            )*
+
+            let request = self.client.build_request(String::from($rpc_name), params);
+
+            match self.client.send_request(&request).and_then(|res| res.into_result::<$return_type>()) {
+                Ok(res) => return Ok(res),
+                Err(e) => return Err(e),
+            }
+        }
+    }
+}
 
 /// A Handle to a Bitcoin Rpc connection
 pub struct BitcoinRpc {
@@ -44,6 +72,18 @@ serde_struct_enum_impl!(GetBlockReply,
                         False, SerializedBlock, result
 );
 
+pub struct BlockChainInfo {
+    chain: String,
+    blocks: u64,
+    headers: u64,
+    bestblockhash: String,
+    difficulty: f64,
+    verificationprogress: f64,
+    chainwork: String,
+}
+
+serde_struct_impl!(BlockChainInfo, chain, blocks, headers, bestblockhash, difficulty, verificationprogress, chainwork);
+
 impl BitcoinRpc {
     /// Creates a connection to a bitcoin rpc server
     pub fn new(url: &str, user: Option<String>, pass: Option<String>) -> Self {
@@ -55,24 +95,13 @@ impl BitcoinRpc {
         }
     }
 
-    pub fn getbestblockhash(&self) -> Result<String, RpcError> {
-        let request = self.client.build_request(String::from("getbestblockhash"), vec![]);
+    rpc_method!(getbestblockhash<String>, "getbestblockhash");
 
-        match self.client.send_request(&request).and_then(|res| res.into_result::<String>()) {
-            Ok(blockhash) => return Ok(blockhash),
-            Err(e) => return Err(e),
-        }
-    }
+    rpc_method!(getblock<GetBlockReply>, "getblock", {
+        header_hash: String,
+        format: bool
+    });
 
-
-    pub fn getblock(&self, header_hash: String, format: bool) -> Result<GetBlockReply, RpcError> {
-        let params: Vec<Json> = vec![Json::from(header_hash), Json::from(format)];
-        let request = self.client.build_request(String::from("getblock"), params);
-
-        match self.client.send_request(&request).and_then(|res| res.into_result::<GetBlockReply>()) {
-            Ok(reply) => return Ok(reply),
-            Err(e) => return Err(e),
-        }
-    }
+    rpc_method!(getblockchaininfo<BlockChainInfo>, "getblockchaininfo");
 }
 
