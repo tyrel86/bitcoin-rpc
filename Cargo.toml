@@ -3,4 +3,11 @@ name = "bitcoin-rpc"
 version = "0.1.0"
 authors = ["Jean Pierre De Jesus Dudey Diaz <jeandudey@hotmail.com>"]
 
+[lib]
+name = "bitcoinrpc"
+path = "src/lib.rs"
+
 [dependencies]
+jsonrpc-v1 = "0.1.0"
+strason = "0.3"
+serde = "0.6"
