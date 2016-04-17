@@ -73,13 +73,13 @@ serde_struct_enum_impl!(GetBlockReply,
 );
 
 pub struct BlockChainInfo {
-    chain: String,
-    blocks: u64,
-    headers: u64,
-    bestblockhash: String,
-    difficulty: f64,
-    verificationprogress: f64,
-    chainwork: String,
+    pub chain: String,
+    pub blocks: u64,
+    pub headers: u64,
+    pub bestblockhash: String,
+    pub difficulty: f64,
+    pub verificationprogress: f64,
+    pub chainwork: String,
 }
 
 serde_struct_impl!(BlockChainInfo, chain, blocks, headers, bestblockhash, difficulty, verificationprogress, chainwork);
@@ -123,7 +123,6 @@ impl BitcoinRpc {
     rpc_method!(getblockhash<Option<String> >, "getblockhash", {
         block_height: i64
     });
-
 
     rpc_method!(getchaintips<ChainTips>, "getblockcount");
 }
