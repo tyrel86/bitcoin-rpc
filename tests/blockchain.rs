@@ -8,11 +8,4 @@ fn test_blockchain_methods() {
 
     client.getbestblockhash().unwrap();
     client.getblockchaininfo().unwrap();
-    client.getblockcount().unwrap();
-    client.getchaintips().unwrap();
-    client.getdifficulty().unwrap();
-    client.getmempoolinfo().unwrap();
-    client.getrawmempool(false).unwrap();
-    client.gettxout(String::from(""), 0, false).unwrap();
-    client.gettxoutsetinfo().unwrap();
 }
