@@ -1,20 +1,19 @@
-/*
- *    Rust Bitcoin RPC API client.
- *    Copyright (C) 2016  Jean Pierre De Jesus Dudey Diaz
- *
- *    This program is free software: you can redistribute it and/or modify
- *    it under the terms of the GNU General Public License as published by
- *    the Free Software Foundation, either version 3 of the License, or
- *    (at your option) any later version.
- *
- *    This program is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *    GNU General Public License for more details.
-
- *    You should have received a copy of the GNU General Public License
- *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+//    Rust Bitcoin RPC API client.
+//    Copyright (C) 2016  Jean Pierre De Jesus Dudey Diaz
+//
+//    This program is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 
 #[macro_use]
 extern crate jsonrpc_v1;
@@ -100,7 +99,14 @@ pub struct BlockChainInfo {
     pub chainwork: String,
 }
 
-serde_struct_impl!(BlockChainInfo, chain, blocks, headers, bestblockhash, difficulty, verificationprogress, chainwork);
+serde_struct_impl!(BlockChainInfo,
+                   chain,
+                   blocks,
+                   headers,
+                   bestblockhash,
+                   difficulty,
+                   verificationprogress,
+                   chainwork);
 
 pub struct ChainTips {
     pub result: Vec<Tip>,
@@ -156,7 +162,12 @@ pub struct ScriptPubKey {
     pub addresses: Vec<String>,
 }
 
-serde_struct_impl!(ScriptPubKey, asm, hex, reqsigs <- "regSigs", scripttype <- "type", addresses);
+serde_struct_impl!(ScriptPubKey,
+                   asm,
+                   hex,
+                   reqsigs <- "regSigs",
+                   scripttype <- "type",
+                   addresses);
 
 pub struct TxOut {
     pub bestblock: String,
@@ -167,7 +178,13 @@ pub struct TxOut {
     pub coinbase: bool,
 }
 
-serde_struct_impl!(TxOut, bestblock, confirmations, value, scriptpubkey <- "scriptPubKey", version, coinbase);
+serde_struct_impl!(TxOut,
+                   bestblock,
+                   confirmations,
+                   value,
+                   scriptpubkey <- "scriptPubKey",
+                   version,
+                   coinbase);
 
 
 pub struct TxOutSetInfo {
@@ -180,7 +197,14 @@ pub struct TxOutSetInfo {
     pub total_amount: f64,
 }
 
-serde_struct_impl!(TxOutSetInfo, height, bestblock, transactions, txouts, bytes_serialized, hash_serialized, total_amount);
+serde_struct_impl!(TxOutSetInfo,
+                   height,
+                   bestblock,
+                   transactions,
+                   txouts,
+                   bytes_serialized,
+                   hash_serialized,
+                   total_amount);
 
 impl BitcoinRpc {
     /// Creates a connection to a bitcoin rpc server
@@ -188,9 +212,7 @@ impl BitcoinRpc {
         // Check that if we have a password, we have a username; other way around is ok
         debug_assert!(pass.is_none() || user.is_some());
 
-        BitcoinRpc {
-            client: RpcClient::new(String::from(url), user, pass),
-        }
+        BitcoinRpc { client: RpcClient::new(String::from(url), user, pass) }
     }
 
     rpc_method!(getbestblockhash<String>, "getbestblockhash");
@@ -224,4 +246,3 @@ impl BitcoinRpc {
 
     rpc_method!(gettxoutsetinfo<TxOutSetInfo>, "gettxoutsetinfo");
 }
-
