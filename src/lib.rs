@@ -89,14 +89,45 @@ serde_struct_enum_impl!(GetBlockReply,
                         False, SerializedBlock, result
 );
 
+pub struct Enforce {
+    pub status: bool,
+    pub found: i64,
+    pub required: i64,
+    pub window: i64,
+}
+
+serde_struct_impl!(Enforce, status, found, required, window);
+
+
+pub struct Reject {
+    pub status: bool,
+    pub found: i64,
+    pub required: i64,
+    pub window: i64,
+}
+
+serde_struct_impl!(Reject, status, found, required, window);
+
+pub struct Softfork {
+    pub id: String,
+    pub version: i64,
+    pub enforce: Enforce,
+    pub reject: Reject,
+}
+
+serde_struct_impl!(Softfork, id, version, enforce, reject);
+
 pub struct BlockChainInfo {
     pub chain: String,
-    pub blocks: u64,
-    pub headers: u64,
+    pub blocks: i64,
+    pub headers: i64,
     pub bestblockhash: String,
     pub difficulty: f64,
+    pub mediantime: i64,
     pub verificationprogress: f64,
     pub chainwork: String,
+    pub pruned: bool,
+    pub softforks: Vec<Softfork>,
 }
 
 serde_struct_impl!(BlockChainInfo,
@@ -105,8 +136,11 @@ serde_struct_impl!(BlockChainInfo,
                    headers,
                    bestblockhash,
                    difficulty,
+                   mediantime,
                    verificationprogress,
-                   chainwork);
+                   chainwork,
+                   pruned,
+                   softforks);
 
 pub struct ChainTips {
     pub result: Vec<Tip>,
