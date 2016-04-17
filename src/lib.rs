@@ -25,9 +25,9 @@ use jsonrpc_v1::Error as RpcError;
 use strason::Json;
 
 macro_rules! rpc_method {
-    ($method_name:ident<$return_type:ty>, $rpc_name:expr) => {
+    ($method_name:ident<$return_type:ty>) => {
         pub fn $method_name(&self) -> Result<$return_type, RpcError> {
-            let request = self.client.build_request(String::from($rpc_name), vec![]);
+            let request = self.client.build_request(String::from(stringify!($method_name)), vec![]);
 
             match self.client.send_request(&request).and_then(|res| res.into_result::<$return_type>()) {
                 Ok(res) => return Ok(res),
@@ -35,7 +35,7 @@ macro_rules! rpc_method {
             }
         }
     };
-    ($method_name:ident<$return_type:ty>, $rpc_name:expr, { $($param:ident : $param_ty:ty),* }) => {
+    ($method_name:ident<$return_type:ty>, { $($param:ident : $param_ty:ty),* }) => {
         pub fn $method_name(&self, $($param : $param_ty),*) -> Result<$return_type, RpcError> {
             let mut params: Vec<Json> = Vec::new();
 
@@ -43,7 +43,7 @@ macro_rules! rpc_method {
                 params.push(Json::from($param));
             )*
 
-            let request = self.client.build_request(String::from($rpc_name), params);
+            let request = self.client.build_request(String::from(stringify!($method_name)), params);
 
             match self.client.send_request(&request).and_then(|res| res.into_result::<$return_type>()) {
                 Ok(res) => return Ok(res),
@@ -248,34 +248,33 @@ impl BitcoinRpc {
         BitcoinRpc { client: RpcClient::new(String::from(url), user, pass) }
     }
 
-    rpc_method!(getbestblockhash<String>, "getbestblockhash");
+    rpc_method!(getbestblockhash<String>);
 
-    rpc_method!(getblock<GetBlockReply>, "getblock", {
+    rpc_method!(getblock<GetBlockReply>, {
         header_hash: String,
         format: bool
     });
 
-    rpc_method!(getblockchaininfo<BlockChainInfo>, "getblockchaininfo");
-    rpc_method!(getblockcount<i64>, "getblockcount");
+    rpc_method!(getblockchaininfo<BlockChainInfo>);
+    rpc_method!(getblockcount<i64>);
 
-    rpc_method!(getblockhash<String>, "getblockhash", {
+    rpc_method!(getblockhash<String>, {
         block_height: i64
     });
 
-    rpc_method!(getchaintips<Vec<Tip> >, "getchaintips");
-    rpc_method!(getdifficulty<f64>, "getdifficulty");
-    rpc_method!(getmempoolinfo<MemPoolInfo>, "getmempoolinfo");
+    rpc_method!(getchaintips<Vec<Tip> >);
+    rpc_method!(getdifficulty<f64>);
+    rpc_method!(getmempoolinfo<MemPoolInfo>);
 
-    rpc_method!(getrawmempool<RawMemPool>, "getrawmempool", {
+    rpc_method!(getrawmempool<RawMemPool>, {
         format: bool
     });
 
-
-    rpc_method!(gettxout<TxOut>, "gettxout", {
+    rpc_method!(gettxout<TxOut>, {
         txid: String,
         vout: i64,
         unconfirmed: bool
     });
 
-    rpc_method!(gettxoutsetinfo<TxOutSetInfo>, "gettxoutsetinfo");
+    rpc_method!(gettxoutsetinfo<TxOutSetInfo>);
 }
