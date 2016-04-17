@@ -259,7 +259,7 @@ impl BitcoinRpc {
     rpc_method!(getblockchaininfo<BlockChainInfo>, "getblockchaininfo");
     rpc_method!(getblockcount<i64>, "getblockcount");
 
-    rpc_method!(getblockhash<Option<String> >, "getblockhash", {
+    rpc_method!(getblockhash<String>, "getblockhash", {
         block_height: i64
     });
 
