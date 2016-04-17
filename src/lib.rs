@@ -142,19 +142,15 @@ serde_struct_impl!(BlockChainInfo,
                    pruned,
                    softforks);
 
-pub struct ChainTips {
-    pub result: Vec<Tip>,
-}
 
 pub struct Tip {
-    pub height: i64,
+    pub height: u64,
     pub hash: String,
-    pub branchlen: i64,
+    pub branchlen: u64,
     pub status: String,
 }
 
 serde_struct_impl!(Tip, height, hash, branchlen, status);
-serde_struct_impl!(ChainTips, result);
 
 pub struct MemPoolInfo {
     pub size: i64,
@@ -263,7 +259,7 @@ impl BitcoinRpc {
         block_height: i64
     });
 
-    rpc_method!(getchaintips<ChainTips>, "getblockcount");
+    rpc_method!(getchaintips<Vec<Tip> >, "getchaintips");
     rpc_method!(getdifficulty<f64>, "getdifficulty");
     rpc_method!(getmempoolinfo<MemPoolInfo>, "getmempoolinfo");
 
