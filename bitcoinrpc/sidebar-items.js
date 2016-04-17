@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["GetBlockReply",""],["RawMemPool",""]],"struct":[["BitcoinRpc","A Handle to a Bitcoin Rpc connection"],["Block",""],["BlockChainInfo",""],["Enforce",""],["MemPoolInfo",""],["Reject",""],["ScriptPubKey",""],["SerializedBlock",""],["Softfork",""],["TXIDS",""],["Tip",""],["TxDescription",""],["TxOut",""],["TxOutSetInfo",""]]});

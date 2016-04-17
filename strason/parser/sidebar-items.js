@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["ErrorType","The type of a Json parsing error"]],"struct":[["Error","A Json parsing error"],["Parser","A structure capable of parsing binary ASCII data into a \"JSON object\", which is simply a tree of strings. Further parsing should be done by other layers."]]});

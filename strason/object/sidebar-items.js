@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["from_serialize","Convert an arbitrary object to a Json structure"],["into_deserialize","Convert a Json structure to an arbitary object"]],"struct":[["Deserializer","A \"Json to whatever\" deserializer"],["Serializer","A \"whatever to Json\" serializer"]]});

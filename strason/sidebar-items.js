@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["object","Serde de/serialization support to/from Json objects"],["parser","Parsing support"],["serializer","Serialization support"]],"struct":[["Json","A \"stringly-typed\" Json object. That is, either a value (represented as a String), or an object (represented as a map from Strings to Jsons)."]]});
