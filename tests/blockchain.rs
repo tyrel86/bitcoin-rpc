@@ -13,4 +13,5 @@ fn test_blockchain_methods() {
     client.getblockcount().unwrap();
     client.getblockhash(0).unwrap();
     client.getchaintips().unwrap();
+    client.getdifficulty().unwrap();
 }
