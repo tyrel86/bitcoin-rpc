@@ -1,5 +1,7 @@
 <p align="center">
-  <a href="https://travis-ci.org/jeandudey/bitcoin-rpc.svg?branch=master" alt="Build Status">
+  <a href="https://travis-ci.org/jeandudey/bitcoin-rpc">
+    <img src="https://travis-ci.org/jeandudey/bitcoin-rpc.svg?branch=master" alt="Build Status">
+    </img>
   </a>
 
   <a href="https://crates.io/crates/bitcoin-rpc">
@@ -9,7 +11,7 @@
   <br/>
 
    <strong>
-     <a href="https://jeandudey.github.io/jsonrpc-v1">
+     <a href="https://jeandudey.github.io/bitcoin-rpc">
        Documentation
      </a>
    </strong>
