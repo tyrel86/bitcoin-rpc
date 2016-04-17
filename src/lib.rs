@@ -84,6 +84,21 @@ pub struct BlockChainInfo {
 
 serde_struct_impl!(BlockChainInfo, chain, blocks, headers, bestblockhash, difficulty, verificationprogress, chainwork);
 
+pub struct ChainTips {
+    pub result: Vec<Tip>,
+}
+
+pub struct Tip {
+    pub height: i64,
+    pub hash: String,
+    pub branchlen: i64,
+    pub status: String,
+}
+
+
+serde_struct_impl!(Tip, height, hash, branchlen, status);
+serde_struct_impl!(ChainTips, result);
+
 impl BitcoinRpc {
     /// Creates a connection to a bitcoin rpc server
     pub fn new(url: &str, user: Option<String>, pass: Option<String>) -> Self {
@@ -103,5 +118,13 @@ impl BitcoinRpc {
     });
 
     rpc_method!(getblockchaininfo<BlockChainInfo>, "getblockchaininfo");
+    rpc_method!(getblockcount<i64>, "getblockcount");
+
+    rpc_method!(getblockhash<Option<String> >, "getblockhash", {
+        block_height: i64
+    });
+
+
+    rpc_method!(getchaintips<ChainTips>, "getblockcount");
 }
 
