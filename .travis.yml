@@ -1,9 +1,8 @@
-sudo: false
 language: rust
 rust:
 - beta
 - stable
-matrix: 
+matrix:
 allow_failures:
 - rust: nightly
 before_script:
@@ -12,6 +11,10 @@ before_script:
   export PATH=$HOME/.local/bin:$PATH
 
 '
+- sudo apt-add-repository ppa:bitcoin/bitcoin -y
+- sudo apt-get update -qq
+- sudo apt-get install bitcoind -y
+- bitcoind -testnet -rpcuser=user -rpcpassword=pass -daemon
 script:
 - ! 'travis-cargo build &&
 
