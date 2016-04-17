@@ -5,7 +5,8 @@
   </a>
 
   <a href="https://crates.io/crates/bitcoin-rpc">
-    <img src="https://img.shields.io/crates/v/bitcoin-rpc.svg?maxAge=2592000"></img>
+    <img src="https://img.shields.io/crates/v/bitcoin-rpc.svg?maxAge=2592000" alt="Crates.io Version">
+    </img>
   </a>
 
   <br/>
