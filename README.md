@@ -37,9 +37,9 @@ extern crate bitcoin_rpc;
 
 ### Example: Connecting to bitcoin rpc server
 ```rust
-extern crate bitcoin_rpc;
+extern crate bitcoinrpc;
 
-use bitcoin_rpc::BitcoinRpc;
+use bitcoinrpc::BitcoinRpc;
 
 fn main() {
     let client = BitcoinRpc::new("example.org:8331", None, None);
