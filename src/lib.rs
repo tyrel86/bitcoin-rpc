@@ -155,9 +155,12 @@ serde_struct_impl!(Tip, height, hash, branchlen, status);
 pub struct MemPoolInfo {
     pub size: i64,
     pub bytes: i64,
+    pub usage: i64,
+    pub maxmempool: i64,
+    pub mempoolminfee: f64,
 }
 
-serde_struct_impl!(MemPoolInfo, size, bytes);
+serde_struct_impl!(MemPoolInfo, size, bytes, usage, maxmempool, mempoolminfee);
 
 pub struct TxDescription {
     pub txid: String,
