@@ -95,9 +95,74 @@ pub struct Tip {
     pub status: String,
 }
 
-
 serde_struct_impl!(Tip, height, hash, branchlen, status);
 serde_struct_impl!(ChainTips, result);
+
+pub struct MemPoolInfo {
+    pub size: i64,
+    pub bytes: i64,
+}
+
+serde_struct_impl!(MemPoolInfo, size, bytes);
+
+pub struct TxDescription {
+    pub txid: String,
+    pub size: i64,
+    pub fee: f64,
+    pub time: i64,
+    pub height: i64,
+    pub startingpriority: i64,
+    pub currentpriority: i64,
+    pub depends: Vec<String>,
+}
+
+pub struct TXIDS {
+    pub result: Vec<String>,
+}
+
+pub enum RawMemPool {
+    True(TxDescription),
+    False(TXIDS),
+}
+
+serde_struct_enum_impl!(RawMemPool,
+                        True, TxDescription, txid <- "TXID", size, fee, time, height, startingpriority, currentpriority, depends;
+                        False, TXIDS, result
+);
+
+pub struct ScriptPubKey {
+    pub asm: String,
+    pub hex: String,
+    pub reqsigs: i64,
+    pub scripttype: String,
+    pub addresses: Vec<String>,
+}
+
+serde_struct_impl!(ScriptPubKey, asm, hex, reqsigs <- "regSigs", scripttype <- "type", addresses);
+
+pub struct TxOut {
+    pub bestblock: String,
+    pub confirmations: i64,
+    pub value: f64,
+    pub scriptpubkey: ScriptPubKey,
+    pub version: i64,
+    pub coinbase: bool,
+}
+
+serde_struct_impl!(TxOut, bestblock, confirmations, value, scriptpubkey <- "scriptPubKey", version, coinbase);
+
+
+pub struct TxOutSetInfo {
+    pub height: i64,
+    pub bestblock: String,
+    pub transactions: i64,
+    pub txouts: i64,
+    pub bytes_serialized: i64,
+    pub hash_serialized: String,
+    pub total_amount: f64,
+}
+
+serde_struct_impl!(TxOutSetInfo, height, bestblock, transactions, txouts, bytes_serialized, hash_serialized, total_amount);
 
 impl BitcoinRpc {
     /// Creates a connection to a bitcoin rpc server
@@ -125,5 +190,20 @@ impl BitcoinRpc {
     });
 
     rpc_method!(getchaintips<ChainTips>, "getblockcount");
+    rpc_method!(getdifficulty<f64>, "getdifficulty");
+    rpc_method!(getmempoolinfo<MemPoolInfo>, "getmempoolinfo");
+
+    rpc_method!(getrawmempool<RawMemPool>, "getrawmempool", {
+        format: bool
+    });
+
+
+    rpc_method!(gettxout<TxOut>, "gettxout", {
+        txid: String,
+        vout: i64,
+        unconfirmed: bool
+    });
+
+    rpc_method!(gettxoutsetinfo<TxOutSetInfo>, "gettxoutsetinfo");
 }
 
