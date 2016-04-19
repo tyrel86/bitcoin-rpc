@@ -28,7 +28,7 @@ I don't have tested it for other cryptocurrencies, only bitcoin was tested.
 Add this to your `Cargo.toml`:
 ```toml
 [dependencies]
-bitcoin-rpc = "0.1.1"
+bitcoin-rpc = "0.1.2"
 ```
 
 And this to your crate root:
