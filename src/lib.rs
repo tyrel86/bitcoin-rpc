@@ -279,8 +279,8 @@ impl BitcoinRpc {
     rpc_method!(gettxoutsetinfo<TxOutSetInfo>);
 
     rpc_method!(verifychain<bool>, {
-        check_level: Option<i64>,
-        number_of_blocks: Option<i64>
+        check_level: i64,
+        number_of_blocks: i64
     });
 
     rpc_method!(verifytxoutproof<String>, {
